@@ -83,7 +83,7 @@ class ImageUploader
             return $sourceFileExtension;
         } else {
             // todo: throw exception
-            echo "Das ist leider kein Bild";
+            echo "Das ist leider kein Bildsdd";
         }
     }
 
