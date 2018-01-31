@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../csss/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/main.css"/>
 </head>
 <body>
 <h1>Image uploader</h1>
