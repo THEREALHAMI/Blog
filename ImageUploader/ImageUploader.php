@@ -20,9 +20,6 @@ if (isset($_POST['upload'])) {
 } */
 //css benutzen
 //shift+f6
-$start = new ImageUploader();
-$start->processFile($_POST, $_FILES);
-
 class ImageUploader
 {
 
@@ -34,7 +31,7 @@ class ImageUploader
      */
     public function processFile(array $fileMeta, array $fileData, string $destinationDirectory = 'images/'): array
     {
-        $this->viewPicture();
+        //$this->viewPicture();
         $newFileName = $this->moveToDestinationDirectory($fileData, $destinationDirectory);
         return [
             'title' => $fileMeta['title'],
@@ -43,14 +40,14 @@ class ImageUploader
 
     }
 
-    private function viewPicture()
+    /*private function viewPicture()
     {
         $alledateien = scandir('images');
 
         foreach ($alledateien as $datei) {
             echo $datei . "<br />";
         }
-    }
+    }*/
 
     /**
      * @param array $fileData
@@ -61,7 +58,12 @@ class ImageUploader
     {
         $sourceFileName = basename($fileData['userFile']['name']);
         $sourceFileDirectory = $fileData['userFile']['tmp_name'];
-        $sourceFileExtension = $this->detectExtension($sourceFileName); //todo: try-catch
+        try {
+            $sourceFileExtension = $this->detectExtension($sourceFileName);
+        } catch (\Exception $exeption) {
+            echo $exeptionMessage = $exeption->getMessage();
+            return '';
+        } //todo: try-catch
 
         $destinationFilesIterator = new FilesystemIterator($destinationDirectory);
         $destinationFileCount = iterator_count($destinationFilesIterator);
@@ -74,8 +76,9 @@ class ImageUploader
     /**
      * @param $sourceFileName
      * @return string
+     * @throws Exception
      */
-    private function detectExtension($sourceFileName) : string
+    private function detectExtension($sourceFileName): string
     {
         $types = array('image/jpeg', 'image/gif', 'image/png');
         if (in_array($_FILES['userFile']['type'], $types)) {
@@ -83,7 +86,7 @@ class ImageUploader
             return $sourceFileExtension;
         } else {
             // todo: throw exception
-            echo "Das ist leider kein Bildsdd";
+            throw new \Exception('Das ist leider kein Bild');
         }
     }
 

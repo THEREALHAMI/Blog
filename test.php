@@ -26,15 +26,14 @@ try {
 
 } catch (\Exception $exeption) {
     // todo: backup code
-    echo "backup ausgeführt";
+
+    echo "backup ausgeführt ". $exeption->getMessage();
 }
 
 
 // https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-meta.md
 function myAutoloader($classname) {
-
-    // todo: make this namespace compatible
-    include $classname. '.php';
+    include(__DIR__ . "/". $classname. '.php');
 }
 
 spl_autoload_register('myAutoloader');
@@ -43,6 +42,7 @@ spl_autoload_register('myAutoloader');
 
 $fizzbuzz = new FizzBuzz();
 
+
 // namespace aufrug
 
-$fizzbuzz2= \FizzBuzz\Engine();
+$fizzbuzz2= new FizzBuzz\Engine();

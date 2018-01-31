@@ -12,12 +12,12 @@ class FizzBuzz
         $answer = '';
         if (isset($input["los"])) {
             if ($input["value"] == $this->checkTheInput($sessionCounter)) {
-                $answer = 'Das ist richtig';
+                $answer = 'Das ist richtig!';
             } elseif ($sessionCounter === 0) {
-                $answer = "Beginn bei 1";
+                $answer = 'Beginn bei 1!';
             } else {
                 session_destroy();
-                $answer = 'Das ist nicht richtig!!!<br><br> Dein Highscore :' . --$sessionCounter;
+                $answer = 'Das ist nicht richtig!!!.Dein Highscore : ' . --$sessionCounter;
 
             }
         }
