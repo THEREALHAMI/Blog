@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="efc9a3f3-ece3-46a0-98aa-85e6a9b30553" name="localserver" url="http://localhost">
+        <fileTransfer port="0" mountedRoot="C:\Users\hami.yildiz\PhpstormProjects\firstPhp" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
