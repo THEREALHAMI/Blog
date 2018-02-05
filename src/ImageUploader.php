@@ -29,7 +29,7 @@ class ImageUploader
      * @param string $destinationDirectory
      * @return array
      */
-    public function processFile(array $fileMeta, array $fileData, string $destinationDirectory = 'images/'): array
+    public function processFile(array $fileMeta, array $fileData, string $destinationDirectory = '../public/imageUploaderImages/'): array
     {
         //$this->viewPicture();
         $newFileName = $this->moveToDestinationDirectory($fileData, $destinationDirectory);
