@@ -29,7 +29,7 @@ class ImageUploader
      * @param string $destinationDirectory
      * @return array
      */
-    public function processFile(array $fileMeta, array $fileData, string $destinationDirectory = '../public/imageUploaderImages/'): array
+    public function processFile(array $fileMeta, array $fileData, string $destinationDirectory = 'imageUploaderImages/'): array
     {
         //$this->viewPicture();
         $newFileName = $this->moveToDestinationDirectory($fileData, $destinationDirectory);
@@ -74,11 +74,11 @@ class ImageUploader
     }
 
     /**
-     * @param $sourceFileName
+     * @param string $sourceFileName
      * @return string
      * @throws Exception
      */
-    private function detectExtension($sourceFileName): string
+    private function detectExtension(string $sourceFileName): string
     {
         $types = array('image/jpeg', 'image/gif', 'image/png');
         if (in_array($_FILES['userFile']['type'], $types)) {

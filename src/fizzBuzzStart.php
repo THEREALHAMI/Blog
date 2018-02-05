@@ -5,13 +5,16 @@ function myAutoloader($classname) {
 
 spl_autoload_register('myAutoloader');
 
+
+
 session_start();
 if (!isset($_SESSION['count'])) {
     $_SESSION['count'] = 0;
-} else {
+} else if (isset($_POST['los'])){
     ++$_SESSION['count'];
 }
 $counter = $_SESSION['count'];
+
 $start = new FizzBuzz\Engine();
 
 $htmlVariables = [
@@ -20,6 +23,12 @@ $htmlVariables = [
 ];
 
 // todo: variablen aus array generieren -> explode
+
+$eachSentenceFromOutput = explode('.' ,$htmlVariables['output']['answer']);
+
+if (!isset($eachSentenceFromOutput[1])){
+    $eachSentenceFromOutput[1] = "";
+}
 
 // start output:
 include('../templates/templatesFizzBuzz/fizz.phtml');

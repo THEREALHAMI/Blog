@@ -5,42 +5,51 @@ namespace FizzBuzz;
 class Engine
 {
     /**
-     * @param $input
-     * @param $sessionCounter
+     * @param array $input
+     * @param int $sessionCounter
      * @return string
      */
-    public function giveOutput($input, $sessionCounter): string
+    public function giveOutput(array $input, int $sessionCounter): array
     {
         $answer = '';
+        if (!isset($_SESSION['highScore'])){
+            $_SESSION['highScore'] = 0;
+        }
         if (isset($input["los"])) {
             if ($input["value"] == $this->checkTheInput($sessionCounter)) {
                 $answer = 'Das ist richtig!';
+                if ($_SESSION['highScore'] < $sessionCounter){
+                    $_SESSION['highScore'] = $sessionCounter;
+                }
             } elseif ($sessionCounter === 0) {
                 $answer = 'Beginn bei 1!';
             } else {
-                session_destroy();
-                $answer = 'Das ist nicht richtig!!!.Dein Highscore : ' . --$sessionCounter;
-
+                $answer = "Das ist nicht richtig!!!.Dein höchster Highscore : " . $_SESSION['highScore'];
+                $_SESSION['count'] = 0;
             }
         }
-        return $answer;
+        return [
+            'answer' => $answer,
+            'highScore' => $_SESSION['highScore']
+        ];
     }
 
+
     /**
-     * @param string $inputValue
+     * @param int $counter
      * @return string
      */
-    private function checkTheInput(string $inputValue): string
+    private function checkTheInput(int $counter): string
     {
         // todo: typesafety debuggen
-        if ($inputValue % 3 == 0 && $inputValue % 5 == 0) {
-            return "fizzbazz";
-        } elseif ($inputValue % 5 == 0) {
-            return "bazz";
-        } elseif ($inputValue % 3 == 0) {
-            return "fizz";
+        if ($counter % 3 == 0 && $counter % 5 == 0) {
+            return "FizzBuzz";
+        } elseif ($counter % 5 == 0) {
+            return "Buzz";
+        } elseif ($counter % 3 == 0) {
+            return "Fizz";
         } else {
-            return $inputValue;
+            return (string)$counter;
         }
     }
 

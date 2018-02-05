@@ -5,12 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css"/>
 </head>
 <body>
-    <form action="index.php?page=fizzBuzz" method="POST" enctype="multipart/form-data">
-        <input id="input" type="text" name="title" placeholder="Titel eingeben"><br/><br/><br/>
-        <input type="file" name="userFile"><br> <br>
-        <input id="button" type="submit" name="upload" value="Hochladen">
+    <h1>Chose Wich Programm to Start</h1>
+    <form action="index.php?side=fizzBuzz" method="POST" enctype="multipart/form-data">
+        <input id="button" type="submit" name="submit" value="Fizz Buzz">
+    </form>
+    <form action="index.php?side=imageUploader" method="POST" enctype="multipart/form-data">
+        <input id="button" type="submit" name="submit" value="Image Uploader">
     </form>
 </body>
 </html>
