@@ -1,16 +1,19 @@
 <?php
-function myAutoloader($classname) {
-    include(__DIR__ . DIRECTORY_SEPARATOR . $classname. '.php');
+
+class FizzBuzzController implements \Check24Framework\ControllerInterface
+{
+    public function action($request)
+    {
+        // TODO: Implement action() method.
+    }
+
 }
-
-spl_autoload_register('myAutoloader');
-
 
 
 session_start();
 if (!isset($_SESSION['count'])) {
     $_SESSION['count'] = 0;
-} else if (isset($_POST['los'])){
+} else if (isset($_POST['los'])) {
     ++$_SESSION['count'];
 }
 $counter = $_SESSION['count'];
@@ -24,11 +27,11 @@ $htmlVariables = [
 
 // todo: variablen aus array generieren -> explode
 
-$eachSentenceFromOutput = explode('.' ,$htmlVariables['output']['answer']);
+$eachSentenceFromOutput = explode('.', $htmlVariables['output']['answer']);
 
-if (!isset($eachSentenceFromOutput[1])){
+if (!isset($eachSentenceFromOutput[1])) {
     $eachSentenceFromOutput[1] = "";
 }
 
 // start output:
-include('../templates/templatesFizzBuzz/fizz.phtml');
+include('../template/fizzbuzz/fizz.phtml');

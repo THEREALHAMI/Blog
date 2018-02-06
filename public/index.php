@@ -1,4 +1,6 @@
 <?php
+include('../bootstrap.php');
+
 
 if (isset($_GET['side'])) {
     switch ($_GET['side']) {
@@ -10,13 +12,20 @@ if (isset($_GET['side'])) {
             break;
     }
 } else {
-    include('../templates/templatesStart/welcomePage.phtml');
+    include('../template/start/welcomePage.phtml');
 }
 
+$router = new \Check24Framework\Router();
 
+$controllerClass = $router->route(include('../config/config.php'), $_GET);
+
+/** @var \Check24Framework\ControllerInterface $controller */
+$controller = new $controllerClass();
+
+$controller->action();
 
 /*
-include('bootstrap.php');
+
 
 $app = new Application();
 $app->init();

@@ -89,5 +89,4 @@ class ImageUploader
             throw new \Exception('Das ist leider kein Bild');
         }
     }
-
 }
