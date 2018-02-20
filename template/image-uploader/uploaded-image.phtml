@@ -1,34 +1,3 @@
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>View</title>
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-</head>
-<style>
-    * {
-        text-align: center;
-        margin: 20px;
-    }
+<h1><?= $title ?></h1>
+<img src="<?= $path ?>" class="rounded mx-auto d-block" alt="Uploaded Image">
 
-    h1 {
-        margin-bottom: 30px;
-    }
-</style>
-<body>
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1><?= $htmlOutput['title']; ?></h1>
-
-            <figure>
-                <img src="<?= $htmlOutput['path']; ?>" class="rounded mx-auto d-block" alt="Uploaded Image">
-            </figure>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>

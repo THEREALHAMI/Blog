@@ -2,21 +2,23 @@
 
 namespace FizzBuzz;
 
+use Check24Framework\Request;
+
 class Engine
 {
     /**
-     * @param array $input
+     * @param Request $input
      * @param int $sessionCounter
-     * @return string
+     * @return array
      */
-    public function giveOutput(array $input, int $sessionCounter): array
+    public function giveOutput(Request $input, int $sessionCounter): array
     {
         $answer = '';
         if (!isset($_SESSION['highScore'])){
             $_SESSION['highScore'] = 0;
         }
-        if (isset($input["los"])) {
-            if ($input["value"] == $this->checkTheInput($sessionCounter)) {
+        if ($input->postFromQuery('los')) {
+            if ($input->postFromQuery('value') == $this->checkTheInput($sessionCounter)) {
                 $answer = 'Das ist richtig!';
                 if ($_SESSION['highScore'] < $sessionCounter){
                     $_SESSION['highScore'] = $sessionCounter;
@@ -41,7 +43,6 @@ class Engine
      */
     private function checkTheInput(int $counter): string
     {
-        // todo: typesafety debuggen
         if ($counter % 3 == 0 && $counter % 5 == 0) {
             return "FizzBuzz";
         } elseif ($counter % 5 == 0) {

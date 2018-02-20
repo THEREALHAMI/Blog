@@ -9,6 +9,12 @@ class Router
     {
         // todo: implement code here
 
-        return '';
+        if (isset($routes[$path])) {
+            return $routes[$path];
+        } else {
+            throw new \Exception('');
+        }
+
     }
+
 }

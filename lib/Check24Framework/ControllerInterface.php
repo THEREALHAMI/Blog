@@ -4,5 +4,6 @@ namespace Check24Framework;
 
 interface ControllerInterface
 {
-    public function action($request);
+    public function action(Request $request);
 }
+
