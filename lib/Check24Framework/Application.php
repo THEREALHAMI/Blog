@@ -10,8 +10,9 @@ class Application
         $router = new Router();
 
         try {
-            $controllerClass = $router->route(include('../src/config/config.php'),
-                ($_SERVER['REQUEST_URI'] ?: '/'));
+
+            $controllerClass = $router->route(include('../src/config/config.php'), $_SERVER['REQUEST_URI']);
+
         } catch (\Exception $exception) {
             //header("HTTP/1.0 404 Not Found");
             include('../template/error/404.html');
@@ -20,8 +21,8 @@ class Application
 
         $controller = new $controllerClass;
         $viewModel = $controller->action($request);
-        $template = new Template($viewModel);
-
+        $renderer = new Renderer();
+        $renderer->render($viewModel);
 
     }
 }

@@ -5,22 +5,25 @@ namespace Check24Framework;
 
 class ViewModel
 {
+
     private $currentPath = null;
     private $contentArray = [];
 
     public function setTemplate($path)
     {
         $this->currentPath = $path;
+
     }
 
-    public function setTemplateVariable($variable)
+    public function setTemplateVariables($variable)
     {
         $this->contentArray = $variable;
     }
 
-
-
-    public function loadTemplate()
+    /**
+     * @return string
+     */
+    public function renderTemplate():string
     {
         extract($this->contentArray);
         ob_start();
@@ -28,6 +31,14 @@ class ViewModel
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString():string 
+    {
+        return $this->renderTemplate();
     }
 
 }

@@ -25,7 +25,8 @@ class FizzBuzz implements ControllerInterface
 
         $htmlVariables = [
             'counter' => $counter,
-            'output' => $fizzBuzzEngine->giveOutput($request, $counter)
+            'output' => $fizzBuzzEngine->giveOutput($request, $counter),
+
         ];
 
         $eachSentenceFromOutput = explode('.', $htmlVariables['output']['answer']);
@@ -33,6 +34,7 @@ class FizzBuzz implements ControllerInterface
         if (!isset($eachSentenceFromOutput[1])) {
             $eachSentenceFromOutput[1] = "";
         }
+
         $outputArray = [
             'counter' => $counter,
             'output' => $eachSentenceFromOutput
@@ -40,7 +42,8 @@ class FizzBuzz implements ControllerInterface
 
         $viewModel = new ViewModel();
         $viewModel->setTemplate('../template/fizzbuzz/fizz.phtml');
-        $viewModel->setTemplateVariable($outputArray);
+        $viewModel->setTemplateVariables($outputArray);
+
         return $viewModel;
     }
 }

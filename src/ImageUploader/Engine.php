@@ -1,6 +1,9 @@
 <?php
+
 namespace ImageUploader;
 
+use Check24Framework\Exception\WrongSizeException;
+use Check24Framework\Exception\IsNotAnPicture;
 use Check24Framework\Request;
 
 class Engine
@@ -31,16 +34,22 @@ class Engine
      */
     private function moveToDestinationDirectory(Request $fileData, string $destinationDirectory): string
     {
-        $sourceFileName = basename($fileData->fileFromQuery('userFile','name'));
-        $sourceFileDirectory = $fileData->fileFromQuery('userFile','tmp_name');
-        $sourceFileExtension = $this->detectExtension($sourceFileName);
+        if ($fileData->fileFromQuery('userFile', 'size') > 60000) {
+            throw new WrongSizeException('Das Bild darf nicht größer als 60 Kbytes sein!!!!');
+        } else {
 
-        $destinationFilesIterator = new \FilesystemIterator($destinationDirectory);
-        $destinationFileCount = iterator_count($destinationFilesIterator);
 
-        $newFileName = $destinationDirectory . ($destinationFileCount + 1) . '.' . $sourceFileExtension;
-        move_uploaded_file($sourceFileDirectory, $newFileName);
-        return $newFileName;
+            $sourceFileName = basename($fileData->fileFromQuery('userFile', 'name'));
+            $sourceFileDirectory = $fileData->fileFromQuery('userFile', 'tmp_name');
+            $sourceFileExtension = $this->detectExtension($sourceFileName);
+
+            $destinationFilesIterator = new \FilesystemIterator($destinationDirectory);
+            $destinationFileCount = iterator_count($destinationFilesIterator);
+
+            $newFileName = $destinationDirectory . ($destinationFileCount + 1) . '.' . $sourceFileExtension;
+            move_uploaded_file($sourceFileDirectory, $newFileName);
+            return $newFileName;
+        }
     }
 
     /**
@@ -56,7 +65,7 @@ class Engine
             $sourceFileExtension = pathinfo($sourceFileName, PATHINFO_EXTENSION);
             return $sourceFileExtension;
         } else {
-            throw new \Exception('Das ist leider kein Bild');
+            throw new IsNotAnPicture('Das ist leider kein Bild');
         }
     }
 }
