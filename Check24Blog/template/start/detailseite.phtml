@@ -1,0 +1,27 @@
+<div id="artikel">
+    <article class="w3-border w3-blue w3-padding"> <?= $output['title'] ?><?= $output['date'] ?></article>
+    <article class="w3-border w3-blue w3-padding"><?= $output['text'] ?> </article>
+    <article class="w3-border w3-blue w3-padding"><?= $output['author'] ?></article>
+</div>
+
+<div id="artikel">
+    <label class="titel">1.Kommentarvorhanden :</label>
+    <article class="w3-border w3-blue w3-padding"> <?= $comments['name'] ?><label>
+            meint:</label><?= $comments['Datum und Uhrzeit'] ?></article>
+    <article class="w3-border w3-blue w3-padding"><?= $comments['text'] ?> </article>
+</div>
+
+<br/><br/><br/><br/><br/>
+<label class="titel">Kommentarschreiben :</label>
+
+<div class="form-style">
+    <form action="" method="post">
+        <label><span>Name </span><input type="text" class="input-field" value=""/></label>
+        <label><span>Email (optional) </span><input type="text" class="input-field" value=""/></label>
+        <label> <span>URL (optional) </span><input type="text" class="input-field" name="field2" value=""/></label>
+
+        <label><span>Bemerkung </span><textarea class="textarea-field"></textarea></label>
+
+        <label><input type="submit" value="Absenden"/></label>
+    </form>
+</div>

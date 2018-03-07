@@ -1,9 +1,25 @@
 <?php foreach ($blogEntries as $blogEntry) : ?>
     <div id="artikel">
-        <article class="w3-border w3-blue w3-padding"><p>Heute: <?= $blogEntry['title'] ?> </p></article>
-        <br/>
-        <article class="w3-border w3-blue w3-padding"><?= $blogEntry['text'] ?> </article>
-        <br/>
+        <article class="w3-border w3-blue w3-padding"><p>
+                <?php if (date('d.m.Y') === $blogEntry['date']): ?>
+                    <?= $blogEntry['date'] = 'Heute :' ?>
+                <?php else: ?>
+                    <?= $blogEntry['date'] ?>
+                <?php endif; ?>
+                <?= $blogEntry['title'] ?> </p>
+        </article>
+        <article class="w3-border w3-blue w3-padding">
+            <?php
+            $text = strlen($blogEntry['text']);
+            if ($text > 500) :?>
+                <?= substr($blogEntry['text'], 0, 500) ?>
+
+                <form method="post" action="detail"><label>...[<input type="submit"name="Weiterlesen" value="Weiterlesen"/>  ]</label></form>
+            <?php else: ?>
+                <?= $blogEntry['text'] ?>
+            <?php endif; ?>
+        </article>
+
         <article class="w3-border w3-blue w3-padding"><p>Autor: <?= $blogEntry['author'] ?></p></article>
     </div>
 <?php endforeach; ?>

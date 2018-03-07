@@ -8,6 +8,7 @@ class ViewModel
 
     private $currentPath = null;
     private $contentArray = [];
+    private $blogContentArray = [];
 
     public function setTemplate($path)
     {
@@ -17,13 +18,22 @@ class ViewModel
 
     public function setTemplateVariables($variable)
     {
+
         $this->contentArray = $variable;
     }
 
     /**
      * @return string
      */
-    public function renderTemplate():string
+    public function __toString(): string
+    {
+        return $this->renderTemplate();
+    }
+
+    /**
+     * @return string
+     */
+    public function renderTemplate(): string
     {
         extract($this->contentArray);
         ob_start();
@@ -34,11 +44,6 @@ class ViewModel
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function __toString():string 
-    {
-        return $this->renderTemplate();
-    }
-
 }

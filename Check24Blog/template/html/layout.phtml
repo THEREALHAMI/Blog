@@ -15,8 +15,12 @@
 <nav class="w3-center w3-black">
     <a href="/" class="w3-bar-item w3-button">Startseite</a>
     <a href="login" class="w3-bar-item w3-button">Login</a>
+    <?php if(isset($links)) :?>
+        <a href="/" class="w3-bar-item w3-button">Beitrag bearbeiten</a>
+        <a href="/" class="w3-bar-item w3-button">Logout</a>
+    <?php endif; ?>
 </nav>
-<main  style="width: 33.3%; margin: 0 auto ">
+<main  style="width: 41.3%; margin: 0 auto ">
     <?= $templateOutput ?>
 </main>
 

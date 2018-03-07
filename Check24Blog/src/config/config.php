@@ -2,5 +2,6 @@
 
 return [
     '/'=> Controller\Home::class,
-    '/login'=>Controller\login::class
+    '/login'=>Controller\Login::class,
+    '/detail'=>Controller\Detail::class
 ];
