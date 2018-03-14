@@ -12,16 +12,26 @@
 </div>
 
 <br/><br/><br/><br/><br/>
-<label class="titel">Kommentarschreiben :</label>
 
-<div class="form-style">
-    <form action="" method="post">
-        <label><span>Name </span><input type="text" class="input-field" value=""/></label>
-        <label><span>Email (optional) </span><input type="text" class="input-field" value=""/></label>
-        <label> <span>URL (optional) </span><input type="text" class="input-field" name="field2" value=""/></label>
-
-        <label><span>Bemerkung </span><textarea class="textarea-field"></textarea></label>
-
-        <label><input type="submit" value="Absenden"/></label>
-    </form>
-</div>
+<form method="post" class="form-style" >
+    <fieldset>
+        <legend class="titel">Kommentarschreiben :</legend>
+        <p>
+            <label class="form-label-style" >Name :</label>
+            <input  type="text" value=""/>
+        </p>
+        <p>
+            <label class="form-label-style">Mail (optional) :</label>
+            <input type="text" name="plz" value=""/>
+        </p>
+        <p>
+            <label class="form-label-style" for="plz">URL (optional) :</label>
+            <input type="text" name="plz" value=""/>
+        </p>
+        <p>
+            <label class="form-label-style" >Bemerkung :</label>
+            <textarea rows="4" cols="25" placeholder="Bemerkungen!!"></textarea>
+        </p>
+    </fieldset>
+    <input class="w3-button only-send-btn" type="Submit" name="newComments" value="Absenden" />
+</form>

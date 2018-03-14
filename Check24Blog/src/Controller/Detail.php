@@ -14,7 +14,7 @@ class Detail implements ControllerInterface
         $viewModel = new ViewModel();
         $viewModel->setTemplate('../template/start/detailseite.phtml');
 
-        if ($request->postFromQuery('Weiterlesen')) {
+        if ($request->getFromPost('Weiterlesen')) {
             $viewModel->setTemplateVariables(['output'=>['title' => " INKS",
                 'date'=>'07.03.2018',
                 'text' => 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',

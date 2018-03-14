@@ -3,28 +3,30 @@
 }
 .titel{
     text-decoration: underline;
+    font-size: 20px;
 }
-
 .form-style{
-    max-width: 500px;
-    padding: 20px 12px 10px 20px;
-    font: 13px Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid silver;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.form-style label{
+.form-label-style {
+    width: 12em;
     display: block;
-    margin: 0px 0px 15px 0px;
-}
-.form-style label > span{
-    width: 100px;
-    font-weight: bold;
     float: left;
-    padding-top: 8px;
-    padding-right: 5px;
 }
-
-.form-style .textarea-field{
-    height:100px;
-    width: 55%;
+.form-style textarea{
+    resize: none;
+}
+.only-send-btn{
+    margin-top: 10px;
+    background-color: #2196F3;
+}
+main{
+    margin: 0 auto;
+    width: 41.3%;
 }
 

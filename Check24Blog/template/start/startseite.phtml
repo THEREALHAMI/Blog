@@ -6,13 +6,13 @@
                 <?php else: ?>
                     <?= $blogEntry['date'] ?>
                 <?php endif; ?>
-                <?= $blogEntry['title'] ?> </p>
+                <?= $blogEntry['titel'] ?> </p>
         </article>
         <article class="w3-border w3-blue w3-padding">
             <?php
-            $text = strlen($blogEntry['text']);
-            if ($text > 500) :?>
-                <?= substr($blogEntry['text'], 0, 500) ?>
+            $content = strlen($blogEntry['content']);
+            if ($content >= 1000) :?>
+                <?= substr($blogEntry['content'], 0, 1000) ?>
 
                 <form method="post" action="detail"><label>...[<input type="submit"name="Weiterlesen" value="Weiterlesen"/>  ]</label></form>
             <?php else: ?>
@@ -20,6 +20,6 @@
             <?php endif; ?>
         </article>
 
-        <article class="w3-border w3-blue w3-padding"><p>Autor: <?= $blogEntry['author'] ?></p></article>
+        <article class="w3-border w3-blue w3-padding"><p>Author: <?= $blogEntry['author'] ?></p></article>
     </div>
 <?php endforeach; ?>

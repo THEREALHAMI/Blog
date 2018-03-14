@@ -25,7 +25,7 @@ class Request
         return false;
     }
 
-    public function postFromQuery(string $name): string
+    public function getFromPost(string $name): string
     {
         if (isset($this->post[$name])){
             return $this->post[$name];
