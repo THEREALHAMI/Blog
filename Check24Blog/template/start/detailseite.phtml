@@ -1,37 +1,43 @@
 <div id="artikel">
-    <article class="w3-border w3-blue w3-padding"> <?= $output['title'] ?><?= $output['date'] ?></article>
-    <article class="w3-border w3-blue w3-padding"><?= $output['text'] ?> </article>
-    <article class="w3-border w3-blue w3-padding"><?= $output['author'] ?></article>
-</div>
+    <article class="w3-border w3-blue w3-padding"><?= $date ?> <?= $title ?></article>
+    <article class="w3-border w3-blue w3-padding"><?= htmlentities( $text )?> </article>
+    <article class="w3-border w3-blue w3-padding"><?= $author ?></article>
+</div><br/><br/><br/><br/>
 
-<div id="artikel">
-    <label class="titel">1.Kommentarvorhanden :</label>
-    <article class="w3-border w3-blue w3-padding"> <?= $comments['name'] ?><label>
-            meint:</label><?= $comments['Datum und Uhrzeit'] ?></article>
-    <article class="w3-border w3-blue w3-padding"><?= $comments['text'] ?> </article>
-</div>
-
+<label class="titel"><?= $count ?>.Kommentarvorhanden :</label>
+<?php foreach ($commentData as $data) : ?>
+    <div id="artikel">
+        <article class="w3-border w3-blue w3-padding">
+            <?= htmlentities($data['name'] )?><label> meint am: </label><?= $data['date'] ?>
+        </article>
+        <article class="w3-border w3-blue w3-padding"><?= htmlentities($data['content'] )?> </article>
+        <article class="w3-border w3-blue w3-padding">
+            <label>Email: </label><?= htmlentities($data['mail']) ?>
+            <label>URL: </label><?= htmlentities($data['url'] )?>
+        </article>
+    </div>
+<?php endforeach; ?>
 <br/><br/><br/><br/><br/>
 
-<form method="post" class="form-style" >
+<form method="post" class="form-style">
     <fieldset>
         <legend class="titel">Kommentarschreiben :</legend>
         <p>
-            <label class="form-label-style" >Name :</label>
-            <input  type="text" value=""/>
+            <label class="form-label-style">Name :</label>
+            <input type="text" name="name" value=""/>
         </p>
         <p>
             <label class="form-label-style">Mail (optional) :</label>
-            <input type="text" name="plz" value=""/>
+            <input type="text" name="mail" value=""/>
         </p>
         <p>
-            <label class="form-label-style" for="plz">URL (optional) :</label>
-            <input type="text" name="plz" value=""/>
+            <label class="form-label-style">URL (optional) :</label>
+            <input type="text" name="url" value=""/>
         </p>
         <p>
-            <label class="form-label-style" >Bemerkung :</label>
-            <textarea rows="4" cols="25" placeholder="Bemerkungen!!"></textarea>
+            <label class="form-label-style">Bemerkung :</label>
+            <textarea rows="4" cols="25" name="bemerkung" placeholder="Bemerkungen!!"></textarea>
         </p>
     </fieldset>
-    <input class="w3-button only-send-btn" type="Submit" name="newComments" value="Absenden" />
+    <input class="w3-button only-send-btn" type="Submit" name="newComment" value="Absenden"/>
 </form>

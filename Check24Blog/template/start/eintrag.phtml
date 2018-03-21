@@ -1,19 +1,15 @@
-<form  class="form-style">
-    <p>
-        <label class="form-label-style" >Date</label>
-        <input  type="date" value="<?= date("d.m.Y")?>" />
-    </p>
+<form method="post" class="form-style">
     <p>
         <label class="form-label-style">Titel</label>
-        <input type="text" name="plz" value=""/>
+        <input type="text" name="titel" value=""/>
     </p>
 
     <p>
         <label class="form-label-style" >Text :</label>
-        <textarea rows="15" cols="35" placeholder="Textschreiben"></textarea>
+        <textarea rows="15" cols="35" name="content" placeholder="Textschreiben"></textarea>
     </p>
     <p>
-        <input class="w3-button only-send-btn" type="submit" name="" value="Absenden" />
+        <input class="w3-button only-send-btn" type="submit" name="absenden" value="Absenden" />
     </p>
 </form>
 

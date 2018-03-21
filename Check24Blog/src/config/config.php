@@ -6,5 +6,6 @@ return [
     '/detail'=>Controller\Detail::class,
     '/logout'=>Controller\Logout::class,
     '/impressum'=>Controller\Impressum::class,
-    '/eintrag'=>Controller\AddEntrie::class
+    '/eintrag'=>Controller\AddEntrie::class,
+    '/addComment'=>Controller\AddComment::class
 ];

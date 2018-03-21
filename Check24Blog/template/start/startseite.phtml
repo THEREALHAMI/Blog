@@ -1,25 +1,29 @@
 <?php foreach ($blogEntries as $blogEntry) : ?>
     <div id="artikel">
         <article class="w3-border w3-blue w3-padding"><p>
-                <?php if (date('d.m.Y') === $blogEntry['date']): ?>
-                    <?= $blogEntry['date'] = 'Heute :' ?>
-                <?php else: ?>
-                    <?= $blogEntry['date'] ?>
-                <?php endif; ?>
+                <?= date('Y-m-d') === $blogEntry['date'] ? $blogEntry['date'] = 'Heute :' : $blogEntry['date'] ?>
                 <?= $blogEntry['titel'] ?> </p>
         </article>
-        <article class="w3-border w3-blue w3-padding">
-            <?php
-            $content = strlen($blogEntry['content']);
-            if ($content >= 1000) :?>
-                <?= substr($blogEntry['content'], 0, 1000) ?>
 
-                <form method="post" action="detail"><label>...[<input type="submit"name="Weiterlesen" value="Weiterlesen"/>  ]</label></form>
-            <?php else: ?>
-                <?= $blogEntry['text'] ?>
+        <article class="w3-border w3-blue w3-padding">
+            <?php $content = strlen($blogEntry['content']);
+            if ($content >= 1000) : ?><?= htmlentities(substr($blogEntry['content'], 0, 1000))?>
+                <a href="/detail?ID=<?= $blogEntry['ID'] ?>">[...]</a>
+            <?php else: ?><?= htmlentities($blogEntry['content']) ?>
+                <a href="/detail?ID=<?= $blogEntry['ID'] ?>"> [Detailseite]</a>
             <?php endif; ?>
         </article>
 
-        <article class="w3-border w3-blue w3-padding"><p>Author: <?= $blogEntry['author'] ?></p></article>
+        <article class="w3-border w3-blue w3-padding">
+            <label>Author: <?= $blogEntry['author'] ?> </label>
+            <label class="w3-right">Kommentare: <?= $blogEntry['commentCount'] ?></label>
+        </article>
+
     </div>
 <?php endforeach; ?>
+
+<?php if ($lastPage != $nextPage) : ?>
+    <a class="w3-button w3-margin only-send-btn" href="?page=<?= $nextPage ?>">Weitere Einträge</a>
+<?php else : ?>
+    <a class="w3-button w3-margin only-send-btn" href="/?page=0">start</a>
+<?php endif; ?>

@@ -14,12 +14,10 @@ class Engine
         $mysql = new \mysqli('localhost', 'root', '', 'blog');
         $username = $request->getFromPost('login');
         $password = $request->getFromPost('password');
-        $query = $mysql->query("SELECT * FROM userdata WHERE LoginName = '$username'");
+        $query = $mysql->query("SELECT * FROM userdata WHERE loginname = '$username'");
         $user = $query->fetch_assoc();
-
-        var_dump(password_verify($password,$user['Password']));
-
-        if ($user!==false&&password_verify($password,$user['Password'])) {
+        $_SESSION['ID'] = $user['ID'];
+        if ($user!==false&&password_verify($password,$user['password'])) {
             $this->loginStatus = true;
         }else{
             throw new LoginMistake('Das sind keine gultige Angaben');
