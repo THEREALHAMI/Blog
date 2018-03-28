@@ -1,29 +1,37 @@
 <?php foreach ($blogEntries as $blogEntry) : ?>
+
+    <?php
+    $source = $blogEntry['date'];
+    $splitDateTime = explode(' ',$source);
+    $date = new DateTime($splitDateTime[0]);
+    $dateFormat = $date->format('d.m.Y');
+    ?>
+
     <div id="artikel">
         <article class="w3-border w3-blue w3-padding"><p>
-                <?= date('Y-m-d') === $blogEntry['date'] ? $blogEntry['date'] = 'Heute :' : $blogEntry['date'] ?>
+                <?= date('d.m.Y') === $dateFormat ? $dateFormat = 'Heute '.$splitDateTime[1] : $dateFormat.' Zeit: '.$splitDateTime[1]?>
                 <?= $blogEntry['titel'] ?> </p>
         </article>
 
         <article class="w3-border w3-blue w3-padding">
             <?php $content = strlen($blogEntry['content']);
-            if ($content >= 1000) : ?><?= htmlentities(substr($blogEntry['content'], 0, 1000))?>
+            echo htmlentities(substr($blogEntry['content'], 0, 1000));
+            if ($content >= 1000) { ?>
                 <a href="/detail?ID=<?= $blogEntry['ID'] ?>">[...]</a>
-            <?php else: ?><?= htmlentities($blogEntry['content']) ?>
+            <?php } else {?>
                 <a href="/detail?ID=<?= $blogEntry['ID'] ?>"> [Detailseite]</a>
-            <?php endif; ?>
+            <?php } ?>
         </article>
 
         <article class="w3-border w3-blue w3-padding">
             <label>Author: <?= $blogEntry['author'] ?> </label>
             <label class="w3-right">Kommentare: <?= $blogEntry['commentCount'] ?></label>
         </article>
-
     </div>
 <?php endforeach; ?>
 
 <?php if ($lastPage != $nextPage) : ?>
     <a class="w3-button w3-margin only-send-btn" href="?page=<?= $nextPage ?>">Weitere Einträge</a>
 <?php else : ?>
-    <a class="w3-button w3-margin only-send-btn" href="/?page=0">start</a>
+    <a class="w3-button w3-margin only-send-btn" href="/">start</a>
 <?php endif; ?>

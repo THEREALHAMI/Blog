@@ -14,7 +14,7 @@ use Check24Framework\ControllerInterface;
 
 class logout implements ControllerInterface
 {
-    public function action($request)
+    public function action($request,\PDO $pdo)
     {
         session_destroy();
         header('location:/',true,301);

@@ -9,19 +9,30 @@ class Engine
 {
     private $loginStatus;
 
-    public function validate(Request $request)
+    /**
+     * @param Request $request
+     * @return bool
+     * @throws LoginMistake
+     */
+    public function validate(Request $request, \PDO $pdo)
     {
-        $mysql = new \mysqli('localhost', 'root', '', 'blog');
+        $stmt = $pdo->prepare("SELECT * FROM userdata WHERE loginname = :username");
+
         $username = $request->getFromPost('login');
         $password = $request->getFromPost('password');
-        $query = $mysql->query("SELECT * FROM userdata WHERE loginname = '$username'");
-        $user = $query->fetch_assoc();
-        $_SESSION['ID'] = $user['ID'];
-        if ($user!==false&&password_verify($password,$user['password'])) {
+
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        $user = $stmt->fetchAll();
+        $_SESSION['ID'] = $user[0]['ID'];
+
+        if ($user !== false && password_verify($password, $user[0]['password'])) {
             $this->loginStatus = true;
-        }else{
+        } else {
             throw new LoginMistake('Das sind keine gultige Angaben');
         }
+
         return $this->loginStatus;
     }
 }

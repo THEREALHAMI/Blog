@@ -8,7 +8,7 @@ class Application
     {
         $request = new Request($_GET, $_POST, $_FILES);
         $router = new Router();
-
+        $pdo =new \PDO('mysql:host=localhost;dbname=blog','root','');
         try {
 
             $controllerClass = $router->route(include('../src/config/config.php'), $_SERVER['REQUEST_URI']);
@@ -20,7 +20,7 @@ class Application
         }
 
         $controller = new $controllerClass;
-        $viewModel = $controller->action($request);
+        $viewModel = $controller->action($request, $pdo);
         $renderer = new Renderer();
         $renderer->render($viewModel);
 

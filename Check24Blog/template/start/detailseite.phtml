@@ -1,14 +1,26 @@
+<?php
+$dat =  new DateTime($date);
+$dateFormat = $dat->format('d.m.Y');
+?>
 <div id="artikel">
-    <article class="w3-border w3-blue w3-padding"><?= $date ?> <?= $title ?></article>
+    <article class="w3-border w3-blue w3-padding"><?= $dateFormat?> <?= $title ?></article>
     <article class="w3-border w3-blue w3-padding"><?= htmlentities( $text )?> </article>
     <article class="w3-border w3-blue w3-padding"><?= $author ?></article>
 </div><br/><br/><br/><br/>
 
 <label class="titel"><?= $count ?>.Kommentarvorhanden :</label>
 <?php foreach ($commentData as $data) : ?>
+    <?php
+    if($count != 0) {
+        $source = $data['date'];
+        $splitDateTime = explode(' ', $source);
+        $date = new DateTime($splitDateTime[0]);
+        $dateFormat = $date->format('d.m.Y');
+    }
+    ?>
     <div id="artikel">
         <article class="w3-border w3-blue w3-padding">
-            <?= htmlentities($data['name'] )?><label> meint am: </label><?= $data['date'] ?>
+            <?= htmlentities($data['name'] )?><label> meint am: </label><?= $dateFormat?>
         </article>
         <article class="w3-border w3-blue w3-padding"><?= htmlentities($data['content'] )?> </article>
         <article class="w3-border w3-blue w3-padding">
@@ -19,7 +31,8 @@
 <?php endforeach; ?>
 <br/><br/><br/><br/><br/>
 
-<form method="post" class="form-style">
+<form method="post" action="/addComment?ID=<?=$ID?>" class="form-style">
+
     <fieldset>
         <legend class="titel">Kommentarschreiben :</legend>
         <p>
@@ -39,5 +52,5 @@
             <textarea rows="4" cols="25" name="bemerkung" placeholder="Bemerkungen!!"></textarea>
         </p>
     </fieldset>
-    <input class="w3-button only-send-btn" type="Submit" name="newComment" value="Absenden"/>
+    <input class="w3-button only-send-btn" type="Submit" name="" value="Absenden"/>
 </form>

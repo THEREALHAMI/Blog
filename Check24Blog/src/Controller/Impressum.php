@@ -5,10 +5,17 @@ namespace Controller;
 use Check24Framework\ControllerInterface;
 use Check24Framework\ViewModel;
 
-
+/**
+ * Class Impressum
+ * @package Controller
+ */
 class Impressum implements ControllerInterface
 {
-    public function action($request):viewModel
+    /**
+     * @param \Check24Framework\Request $request
+     * @return ViewModel
+     */
+    public function action($request,\PDO $pdo):viewModel
     {
         $viewModel = new ViewModel();
         $viewModel->setTemplate('../template/start/impressum.html');
