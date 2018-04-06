@@ -8,7 +8,6 @@ class ViewModel
 
     private $currentPath = null;
     private $contentArray = [];
-    private $blogContentArray = [];
 
     public function setTemplate($path)
     {

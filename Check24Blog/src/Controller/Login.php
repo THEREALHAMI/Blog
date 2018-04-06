@@ -13,21 +13,22 @@ class Login implements ControllerInterface
      * @param \Check24Framework\Request $request
      * @return ViewModel
      */
-    public function action($request,\PDO $pdo): ViewModel
+    public function action($request): ViewModel
     {
-        $viewModel = new ViewModel();
-        $viewModel->setTemplate('../template/start/login.phtml');
+
 
         if ($request->getFromPost('checkingLogin')) {
             try {
                 $engine = new Engine();
-                $engine->validate($request, $pdo);
-                $_SESSION['validate'] = true;
+                $_SESSION['validate'] = $engine->validate($request);
                header('Location:/', true, 301);
+               die();
             } catch (LoginMistake $exception) {
                 echo $exception->getMessage();
             }
         }
+        $viewModel = new ViewModel();
+        $viewModel->setTemplate('../template/start/login.phtml');
         return $viewModel;
     }
 }

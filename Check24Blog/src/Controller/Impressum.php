@@ -15,7 +15,7 @@ class Impressum implements ControllerInterface
      * @param \Check24Framework\Request $request
      * @return ViewModel
      */
-    public function action($request,\PDO $pdo):viewModel
+    public function action($request):viewModel
     {
         $viewModel = new ViewModel();
         $viewModel->setTemplate('../template/start/impressum.html');

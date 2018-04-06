@@ -13,7 +13,4 @@ class Renderer
 
     }
 
-    //todo: fehler behandeln
-
-
 }

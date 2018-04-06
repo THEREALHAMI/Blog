@@ -4,6 +4,7 @@ namespace Login;
 
 use Check24Framework\Exception\LoginMistake;
 use Check24Framework\Request;
+use factory\User;
 
 class Engine
 {
@@ -14,25 +15,25 @@ class Engine
      * @return bool
      * @throws LoginMistake
      */
-    public function validate(Request $request, \PDO $pdo)
+    public function validate(Request $request)
     {
-        $stmt = $pdo->prepare("SELECT * FROM userdata WHERE loginname = :username");
 
         $username = $request->getFromPost('login');
         $password = $request->getFromPost('password');
 
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
+        $user = User::create();
+        $users = $user->checkUserByUserame($username);
 
-        $user = $stmt->fetchAll();
-        $_SESSION['ID'] = $user[0]['ID'];
+        if(empty($username) || empty($password)){
+            throw new LoginMistake('Das sind keine gultige Angaben');
+        }
+        $_SESSION['ID'] = $users[0]['ID'];
 
-        if ($user !== false && password_verify($password, $user[0]['password'])) {
+        if ($users !== false && password_verify($password, $users[0]['password'])) {
             $this->loginStatus = true;
         } else {
             throw new LoginMistake('Das sind keine gultige Angaben');
         }
-
         return $this->loginStatus;
     }
 }

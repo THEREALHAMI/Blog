@@ -5,13 +5,12 @@ namespace Controller;
 
 use Check24Framework\ControllerInterface;
 use Check24Framework\Request;
+use factory\Comment;
 
 class AddComment implements ControllerInterface
 {
-    public function action(Request $request, \PDO $pdo)
+    public function action(Request $request)
     {
-
-        $stmt = $pdo->prepare("INSERT INTO comment(name,mail,url,content,entrieid) VALUES(:name,:mail,:url,:bemerkung,:id)");
 
         $name= $request->getFromPost('name');
         $mail = $request->getFromPost('mail');
@@ -19,13 +18,8 @@ class AddComment implements ControllerInterface
         $bemerkung = $request->getFromPost('bemerkung');
         $ID =$request->getFromQuery('ID');
 
-        $stmt->bindParam(':name',$name);
-        $stmt->bindParam(':mail',$mail);
-        $stmt->bindParam(':url',$url);
-        $stmt->bindParam(':bemerkung',$bemerkung);
-        $stmt->bindParam(':id',$ID);
-
-        $stmt->execute();
+        $comment = Comment::create();
+        $comment->addToDatabase($name,$mail,$url,$bemerkung,$ID);
 
         header("location:/detail?ID=".$ID,true,301);
     }
