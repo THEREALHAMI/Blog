@@ -11,3 +11,6 @@
         <input type="submit" name="checkingLogin" value="Sign in" class="w3-btn w3-black"/>
     </p>
 </form>
+<?php if(!empty($errorMessage)) : ?>
+    <div class="error"><?= $errorMessage?></div>
+<?php endif; ?>

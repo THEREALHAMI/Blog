@@ -8,15 +8,13 @@
 
 namespace Controller;
 
-use Check24Framework\ControllerInterface;
+use Check24Framework\AbstractController;
 
-
-
-class logout implements ControllerInterface
+class Logout extends AbstractController
 {
     public function action($request)
     {
         session_destroy();
-        header('location:/',true,301);
+        $this->redirectTo('location:/');
     }
 }

@@ -8,11 +8,26 @@ class ViewModel
 
     private $currentPath = null;
     private $contentArray = [];
-
+    private $layoutArray = [];
+// Namen ändern
     public function setTemplate($path)
     {
         $this->currentPath = $path;
 
+    }
+
+    public function setLayoutVariables($variable)
+    {
+        $this->layoutArray = $variable;
+
+    }
+
+    /**
+     * @return array
+     */
+    public function getLayoutVariables()
+    {
+        return $this->layoutArray;
     }
 
     public function setTemplateVariables($variable)

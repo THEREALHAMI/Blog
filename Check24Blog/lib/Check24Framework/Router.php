@@ -13,8 +13,8 @@ class Router
             $path= substr($path, 0, strpos($path, $requestQuery)-1);
         }
 
-        if (isset($routes[$path])) {
-            return $routes[$path];
+        if (isset($routes['routes'][$path])) {
+            return $routes['routes'][$path];
         } else {
             throw new \Exception('');
         }

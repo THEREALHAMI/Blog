@@ -3,24 +3,28 @@
 
 namespace Controller;
 
-use Check24Framework\ControllerInterface;
+use Check24Framework\AbstractController;
 use Check24Framework\Request;
-use factory\Comment;
+use Entity\Comment;
 
-class AddComment implements ControllerInterface
+class AddComment extends AbstractController
 {
+    private $comment;
+    public function __construct( $comment)
+    {
+        $this->comment = $comment;
+    }
     public function action(Request $request)
     {
+        $comment = new Comment();
+        $comment->setName($request->getFromPost('name'));
+        $comment->setMail( $request->getFromPost('mail'));
+        $comment->setUrl($request->getFromPost('url'));
+        $comment->setContent($request->getFromPost('bemerkung'));
+        $comment->setId($request->getFromQuery('ID'));
 
-        $name= $request->getFromPost('name');
-        $mail = $request->getFromPost('mail');
-        $url = $request->getFromPost('url');
-        $bemerkung = $request->getFromPost('bemerkung');
-        $ID =$request->getFromQuery('ID');
+        $this->comment->addToDatabase($comment);
 
-        $comment = Comment::create();
-        $comment->addToDatabase($name,$mail,$url,$bemerkung,$ID);
-
-        header("location:/detail?ID=".$ID,true,301);
+        $this->redirectToRoute("location:/detail?ID=".$comment->getId());
     }
 }

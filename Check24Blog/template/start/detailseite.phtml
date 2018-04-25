@@ -1,31 +1,30 @@
 <?php
-$dat =  new DateTime($date);
+$dat =  new DateTime($entryData->getDate());
 $dateFormat = $dat->format('d.m.Y');
 ?>
 <div id="artikel">
-    <article class="w3-border w3-blue w3-padding"><?= $dateFormat?> <?= $title ?></article>
-    <article class="w3-border w3-blue w3-padding"><?= htmlentities( $text )?> </article>
-    <article class="w3-border w3-blue w3-padding"><?= $author ?></article>
+    <article class="w3-border w3-blue w3-padding"><?= $dateFormat?> <?= $entryData->getTitel()?></article>
+    <article class="w3-border w3-blue w3-padding"><?=  $entryData->getContent() ?> </article>
+    <article class="w3-border w3-blue w3-padding"><?= $entryData->getAuthor() ?></article>
 </div><br/><br/><br/><br/>
 
-<label class="titel"><?= $count ?>.Kommentarvorhanden :</label>
-<?php foreach ($commentData as $data) : ?>
+<label class="titel"><?= count($entryData->getComments() )?>.Kommentarvorhanden :</label>
+<?php foreach ($entryData->getComments() as $data) : ?>
     <?php
-    if($count != 0) {
-        $source = $data['date'];
+        $source = $data->getDate();
         $splitDateTime = explode(' ', $source);
         $date = new DateTime($splitDateTime[0]);
         $dateFormat = $date->format('d.m.Y');
-    }
+
     ?>
     <div id="artikel">
         <article class="w3-border w3-blue w3-padding">
-            <?= htmlentities($data['name'] )?><label> meint am: </label><?= $dateFormat?>
+            <label> meint am: </label><?= $dateFormat?>
         </article>
-        <article class="w3-border w3-blue w3-padding"><?= htmlentities($data['content'] )?> </article>
+        <article class="w3-border w3-blue w3-padding"><?= $data->getContent()?> </article>
         <article class="w3-border w3-blue w3-padding">
-            <label>Email: </label><?= htmlentities($data['mail']) ?>
-            <label>URL: </label><?= htmlentities($data['url'] )?>
+            <label>Email: </label><?= $data->getMail() ?>
+            <label>URL: </label><?= $data->getUrl() ?>
         </article>
     </div>
 <?php endforeach; ?>

@@ -1,47 +1,44 @@
 <?php
-//dependence injektion über Konstruker, set und getter(auch möglich)
-//todo: factory für repository erstellen, benutze Konstruker
-
 namespace Controller;
 
-use \Check24Framework\ControllerInterface;
+use Check24Framework\AbstractController;
 use Check24Framework\ViewModel;
-use factory\Entry;
 
-class Home implements ControllerInterface
+class Home extends AbstractController
 {
-    /*
-    private $pdo;
-    public function __construct($pdo)
+
+    private $repositoryEntry;
+
+    public function __construct($repositoryEntry)
     {
-        $this->pdo = $pdo;
-    }*/
+        $this->repositoryEntry = $repositoryEntry;
+    }
 
     /**
      * @param \Check24Framework\Request $request
      * @return ViewModel
      */
-    public function action($request): viewModel
+    public function action($request):ViewModel
     {
 
-        $currentPage = $request->getFromQuery('page') ? $request->getFromQuery('page') : 0;
-        $nextPage = $currentPage + 1;
-        $limit = $currentPage * 3;
+        $currentpage = $request->getfromquery('page') ? $request->getfromquery('page') : 0;
+        $nextpage = $currentpage + 1;
+        $limit = $currentpage * 3;
 
-        $entry = Entry::create();
-       $entrieData = $entry->getFromDatabase($limit);
-       $countEntries = $entry->getCountEntries();
-
-        $lastPage = ceil(($countEntries[0]['count(ID)']) / 3);
+        $entry = $this->repositoryEntry;
+        $entrydata = $entry->getfromdatabase($limit);
+        $countentries = $entry->getcountentries();
+        $lastpage = ceil(($countentries[0] / 3));
 
         $viewModel = new ViewModel();
-        $viewModel->setTemplate('../template/start/startseite.phtml');
-        $viewModel->setTemplateVariables([
-            'blogEntries' => $entrieData,
-            'currentPage' => $currentPage,
-            'nextPage' => $nextPage,
-            'lastPage' => $lastPage
+        $viewModel->settemplate('../template/start/startseite.phtml');
+        $viewModel->settemplatevariables([
+            'blogEntries' => $entrydata,
+            'currentpage' => $currentpage,
+            'nextPage' => $nextpage,
+            'lastPage' => $lastpage
         ]);
+        $viewModel->setLayoutVariables(['asdf' => 'was geht mit dir']);
 
         return $viewModel;
     }

@@ -2,29 +2,29 @@
 
 namespace Check24Framework;
 
-use factory\HomeControllerFactory;
-
 class Application
 {
-    public function init()
+    public function init($config)
     {
+
+        $frameworkConfig = include ('config.php');
+
+        $config= array_merge_recursive($config, $frameworkConfig);
         $request = new Request($_GET, $_POST, $_FILES);
-        $router = new Router();
-        $pdo =new \PDO('mysql:host=localhost;dbname=blog','root','');
+        $diContainer = new DiContainer($config);
+
+        $router = $diContainer->get(Router::class);
         try {
-            //todo: factory
-
-            $controllerClass = $router->route(include('../src/config/config.php'), $_SERVER['REQUEST_URI']);
-
+            $controllerClass = $router->route($config, $_SERVER['REQUEST_URI']);
         } catch (\Exception $exception) {
             header("HTTP/1.0 404 Not Found");
             include('../template/error/404.html');
             die();
         }
-
-
-        $controller = new $controllerClass;
-        $viewModel = $controller->action($request, $pdo);
+        //todo: code ausführen
+        $controller = $diContainer->get($controllerClass);
+        $controller->setRouteConfig($config['routes']);
+        $viewModel = $controller->action($request);
         $renderer = new Renderer();
         $renderer->render($viewModel);
 

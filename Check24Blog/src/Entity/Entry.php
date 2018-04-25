@@ -1,22 +1,60 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hami.yildiz
- * Date: 26.03.2018
- * Time: 15:13
- */
 
 namespace Entity;
 
 
 class Entry
 {
-    private $id = 0;
+    private $ID = 0;
     private $date = '';
     private $titel = '';
     private $content = '';
-    private $authorId = 0;
+    private $commentCount = 0;
+    private $author = 0;
+    private $comments = [];
 
+    /**
+     * @param int $author
+     * @return $this
+     */
+    public function setAuthor(int $author)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
+     * @param string $date
+     * @return $this
+     */
+    public function setDate(string $date)
+    {
+        $this->date = $date;
+        return $this;
+    }
+    /**
+     * @param array $comments
+     * @return Entry
+     */
+    public function setComments(array $comments): Entry
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+    /**
+     * @return array
+     */
+    public function getComments(): array
+    {
+        return $this->comments;
+    }
+    /**
+     * @return int
+     */
+    public function getCommentCount(): int
+    {
+        return $this->commentCount;
+    }
     /**
      * @return string
      */
@@ -26,11 +64,11 @@ class Entry
     }
 
     /**
-     * @return int
+     * @return null
      */
-    public function getAuthorId(): int
+    public function getAuthor()
     {
-        return $this->authorId;
+        return $this->author;
     }
 
     /**
@@ -38,7 +76,7 @@ class Entry
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->ID;
     }
 
     /**
@@ -47,7 +85,7 @@ class Entry
      */
     public function setId(int $id): Entry
     {
-        $this->id = $id;
+        $this->ID = $id;
         return $this;
     }
 

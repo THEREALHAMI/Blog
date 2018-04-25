@@ -2,38 +2,32 @@
 
 namespace Login;
 
-use Check24Framework\Exception\LoginMistake;
-use Check24Framework\Request;
-use factory\User;
-
 class Engine
 {
-    private $loginStatus;
+    private $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
 
     /**
-     * @param Request $request
-     * @return bool
-     * @throws LoginMistake
+     * @param $username
+     * @param $password
+     * @return array
      */
-    public function validate(Request $request)
+    public function validate($username, $password)
     {
-
-        $username = $request->getFromPost('login');
-        $password = $request->getFromPost('password');
-
-        $user = User::create();
-        $users = $user->checkUserByUserame($username);
-
-        if(empty($username) || empty($password)){
-            throw new LoginMistake('Das sind keine gultige Angaben');
+        $user = $this->user->checkUserByUsername($username);
+        if ($user == true && password_verify($password, $user->getPassword())) {
+            return [
+                'validate' => true,
+                'ID' => $user->getID()
+            ];
         }
-        $_SESSION['ID'] = $users[0]['ID'];
-
-        if ($users !== false && password_verify($password, $users[0]['password'])) {
-            $this->loginStatus = true;
-        } else {
-            throw new LoginMistake('Das sind keine gultige Angaben');
-        }
-        return $this->loginStatus;
+        return [
+            'validate' => false,
+            'ID' => null
+        ];
     }
 }

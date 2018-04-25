@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hami.yildiz
- * Date: 05.04.2018
- * Time: 10:22
- */
 
 namespace Repository;
 
@@ -17,15 +11,15 @@ class Comment
         $this->pdo = $pdo;
     }
 
-    public function addToDatabase($name,$mail,$url,$bemerkung,$ID)
+    public function addToDatabase(\Entity\Comment $comment)
     {
         $stmt = $this->pdo->prepare("INSERT INTO comment(name,mail,url,content,entrieid) VALUES(:name,:mail,:url,:bemerkung,:id)");
 
-        $stmt->bindParam(':name',$name);
-        $stmt->bindParam(':mail',$mail);
-        $stmt->bindParam(':url',$url);
-        $stmt->bindParam(':bemerkung',$bemerkung);
-        $stmt->bindParam(':id',$ID);
+        $stmt->bindValue(':name',$comment->getName());
+        $stmt->bindValue(':mail',$comment->getMail());
+        $stmt->bindValue(':url',$comment->getUrl());
+        $stmt->bindValue(':bemerkung',$comment->getContent());
+        $stmt->bindValue(':id',$comment->getId());
 
         $stmt->execute();
     }
@@ -39,7 +33,9 @@ class Comment
         $stmt = $this->pdo->prepare("SELECT * FROM comment WHERE entrieid = :blogID");
         $stmt->bindParam(':blogID', $blogId);
         $stmt->execute();
-        $commentData = $stmt->fetchAll();
+
+        $commentData =  $stmt->fetchAll($this->pdo::FETCH_CLASS, '\Entity\Comment');
+
         return $commentData;
     }
 

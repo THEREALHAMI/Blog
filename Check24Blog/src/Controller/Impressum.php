@@ -2,14 +2,14 @@
 
 namespace Controller;
 
-use Check24Framework\ControllerInterface;
+use Check24Framework\AbstractController;
 use Check24Framework\ViewModel;
 
 /**
  * Class Impressum
  * @package Controller
  */
-class Impressum implements ControllerInterface
+class Impressum extends AbstractController
 {
     /**
      * @param \Check24Framework\Request $request

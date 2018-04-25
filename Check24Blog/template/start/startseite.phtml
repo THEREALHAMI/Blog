@@ -1,7 +1,8 @@
-<?php foreach ($blogEntries as $blogEntry) : ?>
+
+<?php  foreach ($blogEntries as $blogEntry) : ?>
 
     <?php
-    $source = $blogEntry['date'];
+    $source = $blogEntry->getDate();
     $splitDateTime = explode(' ',$source);
     $date = new DateTime($splitDateTime[0]);
     $dateFormat = $date->format('d.m.Y');
@@ -10,22 +11,22 @@
     <div id="artikel">
         <article class="w3-border w3-blue w3-padding"><p>
                 <?= date('d.m.Y') === $dateFormat ? $dateFormat = 'Heute '.$splitDateTime[1] : $dateFormat.' Zeit: '.$splitDateTime[1]?>
-                <?= $blogEntry['titel'] ?> </p>
+                <?= $blogEntry->getTitel() ?> </p>
         </article>
 
         <article class="w3-border w3-blue w3-padding">
-            <?php $content = strlen($blogEntry['content']);
-            echo htmlentities(substr($blogEntry['content'], 0, 1000));
+            <?php $content = strlen( $blogEntry->getContent());
+            echo htmlentities(substr($blogEntry->getContent(), 0, 1000));
             if ($content >= 1000) { ?>
-                <a href="/detail?ID=<?= $blogEntry['ID'] ?>">[...]</a>
+                <a href="/detail?ID=<?= $blogEntry->getId()?>">[...]</a>
             <?php } else {?>
-                <a href="/detail?ID=<?= $blogEntry['ID'] ?>"> [Detailseite]</a>
+                <a href="/detail?ID=<?= $blogEntry->getId() ?>"> [Detailseite]</a>
             <?php } ?>
         </article>
 
         <article class="w3-border w3-blue w3-padding">
-            <label>Author: <?= $blogEntry['author'] ?> </label>
-            <label class="w3-right">Kommentare: <?= $blogEntry['commentCount'] ?></label>
+            <label>Author: <?=$blogEntry->getAuthor()?> </label>
+            <label class="w3-right">Kommentare: <?= $blogEntry->getCommentCount()?></label>
         </article>
     </div>
 <?php endforeach; ?>

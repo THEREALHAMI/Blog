@@ -5,10 +5,11 @@ namespace Repository;
 class Entry
 {
     private $pdo;
+    private $entryById = [];
 
     public function __construct($pdo)
     {
-        $this->pdo =  $pdo;
+        $this->pdo = $pdo;
     }
 
     /**
@@ -25,51 +26,58 @@ class Entry
         ORDER BY date DESC
         LIMIT :limit, 3");
 
-        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, $this->pdo::PARAM_INT);
         $stmt->execute();
-        $entryData = $stmt->fetchAll();
-       var_dump($stmt->fetchObject('\Entity\Entry'));
 
+        $entryData = $stmt->fetchAll($this->pdo::FETCH_CLASS, '\Entity\Entry');
         return $entryData;
     }
 
     /**
-     * @return array
+     * @return mixed
      */
-    public function getCountEntries(): array
+    public function getCountEntries()
     {
-        $stmt = $this->pdo->prepare("SELECT count(ID) FROM entrie ");
-        $stmt->execute();
-        $countEntries = $stmt->fetchAll();
-
-        return $countEntries;
+        $stmt = $this->pdo->query("SELECT count(ID) AS entryCount FROM entrie");
+        $rowCount = $stmt->fetch();
+        return $rowCount;
     }
 
-    public function addToDatabase($date, $titel, $content, $authorId)
+    public function addToDatabase(\Entity\Entry $entry)
     {
         $stmt = $this->pdo->prepare("INSERT INTO entrie(date,titel,content,author) VALUES(:date,:titel,:content,:authorID)");
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':titel', $titel);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':authorID', $authorId);
+        $stmt->bindValue(':date', $entry->getDate());
+        $stmt->bindValue(':titel', $entry->getTitel());
+        $stmt->bindValue(':content', $entry->getContent());
+        $stmt->bindValue(':authorID', $entry->getAuthor());
         $stmt->execute();
 
     }
 
     /**
-     * @param $blogId
-     * @return array
+     * @param $id
+     * @return \Entity\Entry
      */
-    public function getEntryById($blogId): array
+    public function getEntryById($id): \Entity\Entry
     {
-        $stmt = $this->pdo->prepare("SELECT entrie.*, userdata.loginname AS author
-            FROM entrie 
-            LEFT JOIN userdata ON (entrie.author = userdata.ID) 
-            WHERE entrie.ID = :blogID");
-        $stmt->bindParam(':blogID', $blogId);
-        $stmt->execute();
-        $entryData = $stmt->fetchAll();
 
-        return $entryData;
+        $stmtEntry = $this->pdo->prepare("SELECT entrie.*, userdata.loginname AS author
+           FROM entrie
+           LEFT JOIN userdata ON (entrie.author = userdata.ID)
+           WHERE entrie.ID =:id"
+        );
+        $stmtEntry->bindParam(':id', $id);
+        $stmtEntry->execute();
+        $this->entryById = $stmtEntry->fetchObject('\Entity\Entry');
+
+        $stmtComment = $this->pdo->prepare("SELECT * FROM comment WHERE entrieid = :ID");
+        $stmtComment->bindParam(':ID', $id);
+        $stmtComment->execute();
+        $comments = $stmtComment->fetchAll($this->pdo::FETCH_CLASS, '\Entity\Comment');
+
+        $this->entryById->setComments($comments);
+
+        return $this->entryById;
     }
+
 }

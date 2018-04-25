@@ -2,17 +2,19 @@
 // TEXT ohne leerzeichen  = FEHLER
 namespace Controller;
 
-use Check24Framework\ControllerInterface;
+use Check24Framework\AbstractController;
 use Check24Framework\Request;
 use Check24Framework\ViewModel;
-use factory\Entry;
-use factory\Comment;
 
-class Detail implements ControllerInterface
+class Detail extends AbstractController
 {
+    private $entry;
+    public function __construct($entry)
+    {
+        $this->entry = $entry;
+    }
     /**
      * @param Request $request
-     * @param \PDO $pdo
      * @return ViewModel
      */
     public function action(Request $request): ViewModel
@@ -22,19 +24,11 @@ class Detail implements ControllerInterface
 
         $blogId = $request->getFromQuery('ID');
 
-        $entry = Entry::create();
-        $entryData = $entry->getEntryById($blogId);
 
-        $comment = Comment::create();
-        $commentData = $comment->getCommentByBlogId($blogId);
+        $entryData = $this->entry->getEntryById($blogId);
 
             $viewModel->setTemplateVariables([
-                'title' => $entryData[0]['titel'],
-                'date' => $entryData[0]['date'],
-                'text' => $entryData[0]['content'],
-                'author' => $entryData[0]['author'],
-                'commentData' => $commentData,
-                'count' => count($commentData),
+                'entryData'=> $entryData,
                 'ID' => $blogId
             ]);
         return $viewModel;

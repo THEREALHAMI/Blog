@@ -8,19 +8,18 @@
     <link rel="stylesheet" href="css/w3.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
-
+<?= isset($layoutVariables['asdf'])?>
 <body>
 <header class="w3-container w3-blue" style="height: 200px"></header>
-
 <nav class="w3-center w3-black">
-    <?php if (!isset($_SESSION['validate'])) :?>
-    <a href="/" class="w3-bar-item w3-button">Startseite</a>
-    <a href="login" class="w3-bar-item w3-button">Login</a>
-    <?php else:?>
-    <a href="/" class="w3-bar-item w3-button">Startseite</a>
-    <a href="eintrag" class="w3-bar-item w3-button">Eintrag hinzufügen</a>
-    <a href="logout" class="w3-bar-item w3-button">Logout</a>
-    <?php endif;?>
+    <?php if (isset($_SESSION['validate'])) : ?>
+        <a href="/" class="w3-bar-item w3-button">Startseite</a>
+        <a href="eintrag" class="w3-bar-item w3-button">Eintrag hinzufügen</a>
+        <a href="logout" class="w3-bar-item w3-button">Logout</a>
+    <?php else: ?>
+        <a href="/" class="w3-bar-item w3-button">Startseite</a>
+        <a href="login" class="w3-bar-item w3-button">Login</a>
+    <?php endif; ?>
 </nav>
 <main>
     <?= $templateOutput ?>

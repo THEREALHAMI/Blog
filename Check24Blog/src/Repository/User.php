@@ -1,34 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hami.yildiz
- * Date: 05.04.2018
- * Time: 11:48
- */
+
 
 namespace Repository;
-use factory\PdoFactory;
 
 class User
 {
     private $pdo;
 
-    public function __construct()
+    public function __construct($pdo)
     {
-        $this->pdo = PdoFactory::create();
+        $this->pdo = $pdo;
     }
 
     /**
      * @param $username
      * @return mixed
      */
-    public function checkUserByUserame($username)
+    public function checkUserByUsername($username)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM userdata WHERE loginname = :username");
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        $user = $stmt->fetchAll();
-
+        $user =  $stmt->fetchObject('\Entity\User');
         return $user;
     }
 }
